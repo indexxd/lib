@@ -1,0 +1,67 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Manage reservations{% endblock %}
+
+
+{% block content %}
+<div id="app">
+    <main class="main-adminpage">
+        <div class="container">
+            <a href="{{ path('admin_loans') }}">Go to loans</a>
+            <h3 class="table-header">{{ pendingReservations|length > 0 ? "Pending reservations" : "No pending reservations"}}</h3>
+            {% if pendingReservations|length > 0 %}
+                <table id="admin-pending-reservations-table" class="table mb2">
+                    <tr>
+                        <th scope="col">Book title</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Made by</th>
+                        <th scope="col"></th>
+                    </tr>
+                    {% for res in pendingReservations %}
+                        {% if res.active %}
+                            <tr>
+                                <th scope="row">{{ res.book.title }}</th>
+                                <td>{{ res.createdAt|date("d. m. Y") }}</td>
+                                <td>{{ res.user.username }}</td>
+                                <td><button data-reservation-id="{{ res.id }}" class="btn btn-outline-primary toggle-reservation-ready">Is ready</button></td>
+                            </tr>            
+                        {% endif %}               
+                    {% endfor %}
+                </table>
+            {% endif %}
+            
+            <h3 class="table-header">{{ availableReservations|length > 0 ? "Available reservations" : "No available reservations"}}</h3>
+            {% if availableReservations|length > 0 %}
+                <table id="admin-available-reservations-table" class="table">
+                    <tr>
+                        <th scope="col">Book title</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Made by</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    {% for res in availableReservations %}
+                        {% if res.active %}
+                            <tr>
+                                <th scope="row">{{ res.book.title }}</th>
+                                <td>{{ res.createdAt|date("d. m. Y") }}</td>
+                                <td>{{ res.user.username }}</td>
+                                <td><button data-reservation-id="{{ res.id }}" class="btn btn-outline-danger toggle-reservation-ready">Not ready</button></td>
+                                <td><button data-reservation-id="{{ res.id }}" class="btn btn-outline-success make-loan">Lend out</button></td>
+                            </tr>            
+                        {% endif %}               
+                    {% endfor %}
+                </table>
+            {% endif %}
+            
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+
+
+{% block javascript %}
+{{parent()}}
+{{encore_entry_script_tags("admin-reservations")}}
+{% endblock %}

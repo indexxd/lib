@@ -1,0 +1,21 @@
+@import "lib.scss";
+
+html, body, .login-form-container {
+    height: 100%;
+}
+
+.form-wrapper {
+    border-radius: 6px;
+    margin: 20px 60px;
+    padding: 20px 60px;
+    @include box-shadow(4px, grey);
+}
+
+.login-form-container {
+    align-items: center;
+
+    input, button {
+        margin-bottom: 15px;    
+    }
+}
+

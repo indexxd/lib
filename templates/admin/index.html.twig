@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}!{% endblock %}
+
+{% block content %}
+
+<div id="app">
+    <a href="{{ path('admin_loans') }}">Manage loans</a><br>
+    <a href="{{ path('admin_reservations') }}">Manage reservations</a>
+    <br><a href="{{ path('admin_books') }}">Manage books</a>
+</div>
+{% endblock %}

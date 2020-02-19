@@ -1,0 +1,48 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Borrowed books{% endblock %}
+
+
+{% block content %}
+
+<div id="app">
+    <main class="main-accountpage">
+    <div class="container">
+    <div class="row"></div>
+    <h3 class="table-header">{{ loans|length > 0 ? "Borrowed books" : "No borrowed books"}}</h3>
+    {% if loans|length > 0 %}
+        <table id="loans-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Book title</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Return by</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Days left</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for loan in loans %}
+                <tr class="{{ loan.daysLeft > 0 ? "table-success" : "table-danger" }}">
+                    <th scope="row">{{ loan.book.title }}</th>
+                    <td>{{ loan.dateCreated|date("d. m. Y") }}</td>
+                    <td>{{ loan.dueBy|date("d. m. Y") }}</td>
+                    <td>{{ loan.returned ? "Returned" : "Not returned"}}</td>
+                    <td>{{ loan.daysLeft }} days</td>
+                </tr>            
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    </div>
+    </main>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+</script>
+{{ parent() }}
+{% endblock %}

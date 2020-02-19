@@ -1,0 +1,49 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}My reservations{% endblock %}
+
+
+{% block content %}
+
+<div id="app">
+    <main class="main-accountpage">
+    <div class="container">
+    <div class="row"></div>
+    <h3 class="table-header">{{ reservations|length > 0 ? "Active reservations" : "No active reservations"}}</h3>
+    {% if reservations|length > 0 %}
+        <table id="reservations-table" class="table table-stripped">
+            <thead>
+                <tr>
+                    <th scope="col">Book title</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for res in reservations %}
+                {% if res.active %}
+                    <tr>
+                        <th scope="row">{{ res.book.title }}</th>
+                        <td>{{ res.createdAt|date("d. m. Y") }}</td>
+                        <td>{{ res.ready ? "Ready" : "Not ready"}}</td>
+                        <td><button data-reservation-id="{{ res.id }}" class="btn btn-danger">Cancel</button></td>
+                    </tr>            
+                {% endif %}               
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    </div>
+    </main>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+</script>
+{{ parent() }}
+{{ encore_entry_script_tags("account-reservations") }}
+{% endblock %}

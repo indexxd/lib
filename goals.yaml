@@ -1,0 +1,32 @@
+1. make copies
+2. reserve borrow
+reservation, borrowed, 
+
+library:
+	admin:
+		manage everyone/everything
+	customer:
+		actions:
+			reserve
+			borrow
+			check history/status
+	employee:
+		actions:
+			add book
+			manage returns
+			give out reservations:
+				list of pending
+				checkout
+				timer
+	anyone:
+		browse
+	book:
+		title
+		title_original
+		author
+		lang
+		lang_original
+		translation:null
+		description
+		edition
+		release_date

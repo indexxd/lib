@@ -1,0 +1,42 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Loans{% endblock %}
+
+{% block content %}
+<div id="app">
+    <main class="main-adminpage">
+        <div class="container">
+            <a href="{{ path('admin_reservations') }}">Go to reservations</a>
+            <h3 class="table-header">Loans</h3>
+            <table id="admin-loans-table" class="table">
+                <tr>
+                    <th scope="col">Book title</th>
+                    <th scope="col">Due in</th>
+                    <th scope="col">Borrowed by</th>
+                    <th scope="col"></th>
+                </tr>
+                {% for loan in loans %}
+                    <tr>
+                        <th scope="col">{{ loan.book.title }}</th>
+                        <td scope="col">{{ loan.daysLeft }}</td>
+                        <td scope="col">{{ loan.user.username }}</td>
+                        {% if loan.daysLeft > 0 %}
+                            <td scope="col">
+                                <button data-loan-id="{{ loan.id }}" class="btn btn-success">Returned</button>
+                            </td>
+                        {% else %}
+                            <td scope="col">
+                                <button data-loan-id="{{ loan.id }}" data-loan-penalty="{{ loan.calculatePenalty()}}" class="btn btn-danger">Pay and return</button>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{{ encore_entry_script_tags("admin-loans") }}
+{% endblock %}

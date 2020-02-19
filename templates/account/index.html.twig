@@ -1,0 +1,25 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}My Account{% endblock %}
+
+{% block styles %}
+{{ parent() }}
+<style>
+    #app {
+        min-height: 84vh;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="app">
+<a href="{{ path('account_reservations') }}">My reservations</a><br>
+<a href="{{ path('account_loans') }}">Borrowed books</a>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+{% endblock %}

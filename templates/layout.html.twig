@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+
+{% include "_main_nav.html.twig" %}
+
+
+
+{% block content %}{% endblock %}
+
+<footer>
+    <div class="container">  
+        <p style="text-align:center;font-size:2em;">Footer</p>
+    </div>
+</footer>
+
+
+{% endblock %}
+
+
+
+{% block javascript %}
+{{ parent() }}
+{% endblock %}

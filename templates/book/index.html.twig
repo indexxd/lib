@@ -1,0 +1,41 @@
+{% extends "layout.html.twig" %}
+{% block title %}{{ book.title }}{% endblock %}
+
+
+{% block content %}
+
+<div id="app">
+    <main class="main-bookpage">
+            <div class="book-cover">
+                <img src="{{ asset('uploads/covers/' ~ book.cover) }}" alt="">
+            </div>
+            <div class="book-details">
+                <h1>{{ book.title }}</h1>
+                <h2>{{ book.originalTitle }}</h2>
+                <h3 class="book-author">{{ book.author }}</h3>
+            </div>
+            <div class="book-controls">
+                {% if app.user %}
+                    <reserve-controls></reserve-controls>
+                {% else %}
+                    Login to make a reservation.    
+                {% endif %}
+            </div>
+            <div class="book-description">
+                <h4>Description</h4>
+                <p>{{ book.description }}</p>
+            </div>
+    </main>
+</div>
+
+{% endblock %}
+
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    let book = {
+        id: "{{ book.id }}",
+    }
+</script>
+{% endblock %}

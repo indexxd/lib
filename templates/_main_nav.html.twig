@@ -1,0 +1,15 @@
+<nav class="main-nav">
+    <div class="navbar-brand-wrapper">
+        <a href="{{ path('default') }}" class="navbar-this">Home</a>
+    </div>
+    <ul>
+        {% if app.user %}
+            <li>	
+                <a href="{{ is_granted('ROLE_CUSTOMER') ? path('account') : path('admin') }}">{{ app.user.username }}</a>
+			</li>
+            <li><a href="{{ path('app_logout') }}">Logout</a></li>
+        {% else %}    
+            <li><a href="{{ path('app_login') }}">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>

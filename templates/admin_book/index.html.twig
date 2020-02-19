@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Books{% endblock %}
+
+{% block content %}
+
+<div id="app">
+    {% for item in app.flashes("success") %}
+        <div class="alert alert-success" role="alert">
+            {{item}}
+        </div>
+    {% endfor %}
+
+    <a href="/admin/books/new">Add new book</a>
+
+    <form method="GET">
+        <div class="center-container">
+            <div class="search-field input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Search here">
+                <div class="input-group-append">
+                    <input class="btn btn-primary" id="search-button" type="submit" value="Submit">
+                </div>
+            </div>
+        </div>
+    </form>
+    
+
+    <div class="book-list">
+    {% for book in pagination %}
+        <div class="book-list__item">
+        <a href="/admin/books/{{book.id}}/edit" title="Edit {{ book.title }}" class="book-card">
+            <img class="book-card__img" src="{{ asset('uploads/covers/' ~ book.cover) }}" alt="anythin">
+            <div class="book-card__title">{{ book.title }} | <span class="book-card__orig-title">{{ book.originalTitle }}</span></div>   
+            <div class="book-card__author">{{ book.author }}</div>
+            <div class="book-card__quantity">Currently available: <span>{{ book.currentQuantity }}</span></div>
+        </a>
+        <div class="book-card-controls">
+            <button data-book-id="{{ book.id }}" class="book-card-controls__delete btn btn-danger">Delete</button>
+        </div>
+        </div>
+    {% endfor %}
+    {{ knp_pagination_render(pagination) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{{ encore_entry_script_tags("admin-books") }}
+{% endblock %}
