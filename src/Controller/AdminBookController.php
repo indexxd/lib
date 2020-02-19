@@ -100,6 +100,14 @@ class AdminBookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $book->setSlug($slugger->getUnique($book, "title"));
+
+            $file = $form->get('cover')->getData();
+            $imgPath = $this->isImageValid($file);
+
+            if ($imgPath) {
+                $book->setCover($imgPath);
+            }
+            
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($book);
