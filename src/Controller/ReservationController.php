@@ -45,7 +45,9 @@ class ReservationController extends AbstractController
      */
     public function delete(Reservation $reservation)
     {
-        $this->getDoctrine()->getManager()->remove($reservation)->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($reservation);
+        $em->flush();
                 
         return new Response();
     }

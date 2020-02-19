@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use App\Util\EntitySluggerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -46,7 +47,9 @@ class AdminBookController extends AbstractController
      */
     public function delete(Book $book)
     {
-        $this->getDoctrine()->getManager()->remove($book);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($book);
+        $em->flush();
 
         $this->addFlash("success", $book->getTitle() . " has been deleted.");
 
@@ -67,13 +70,10 @@ class AdminBookController extends AbstractController
             $file = $form->get('cover')->getData();
             $imgPath = $this->isImageValid($file);
 
-            if (!$imgPath) {
-                $this->addFlash("danger", "There was a problem uploading file of " . $book->getTitle());
-
-                return $this->redirectToRoute("admin_books");
+            if ($imgPath) {
+                $book->setCover($imgPath);
             }
 
-            $book->setCover($imgPath);
             
             $this->getDoctrine()->getManager()->flush();
             
@@ -91,7 +91,7 @@ class AdminBookController extends AbstractController
     /**
      * @Route("/new", name="admin_books_new")
      */
-    public function new(Request $request)
+    public function new(Request $request, EntitySluggerInterface $slugger)
     {
         $book = new Book();
         
@@ -99,6 +99,8 @@ class AdminBookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $book->setSlug($slugger->getUnique($book, "title"));
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($book);
             $em->flush();
@@ -112,7 +114,7 @@ class AdminBookController extends AbstractController
     }
 
     /** Returns file name or false on error  */
-    private function isImageValid(UploadedFile $file)
+    private function isImageValid(?UploadedFile $file)
     {
         if ($file) {
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);

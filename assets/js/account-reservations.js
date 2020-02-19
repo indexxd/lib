@@ -1,4 +1,4 @@
-import { addClickEventsToArray } from "./app.js";
+import { addClickEventsToArray, Routing } from "./app.js";
 
 (() => {
     addClickEventsToArray(document.querySelectorAll("#reservations-table button"), (e) => {

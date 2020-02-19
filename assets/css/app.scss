@@ -182,6 +182,7 @@ Book Page Styles
 .main-default {
     height: 84vh;
     background: url("../images/booko.jpg");
+    background-size: cover;
     
     .container {
         display: grid;
@@ -457,8 +458,11 @@ button.disabled {
     }
 }
 
-footer {
-    height: 8vh;
+.footer {
+    min-height: 8vh;
     background: #212121;
     color: var(--lightest);
+    display:flex;
+    align-items:center;
+    justify-content: center;
 }

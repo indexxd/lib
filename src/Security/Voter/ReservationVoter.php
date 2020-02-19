@@ -10,7 +10,7 @@ use App\Entity\Reservation;
 
 class ReservationVoter extends Voter
 {
-    const DELETE = "delete";
+    const DELETE = "DELETE";
     private $security;
 
     public function __construct(Security $security)
@@ -29,7 +29,6 @@ class ReservationVoter extends Voter
 
         $user = $token->getUser();
                
-        
         if ($attribute === self::DELETE) {
             if ($subject->getUser() === $user && $this->security->isGranted("ROLE_CUSTOMER")) {
                 return true;

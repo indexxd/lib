@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Book;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,12 +15,18 @@ class BookType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $years = [];
+        
+        for ($i = 2000; $i <= date("Y"); $i++) {
+            $years[] = $i;
+        }
+
         $builder
             ->add('title')
             ->add('originalTitle')
             ->add('author')
             ->add('description')
-            ->add('released')
+            ->add('released', DateType::class, ["years" => $years])
             ->add('cover', FileType::class, [
                 'mapped' => false, 
                 "required" => false,
