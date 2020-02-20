@@ -58,17 +58,12 @@ class BookRepository extends ServiceEntityRepository
             where match(title, original_title) against(:val in boolean mode) "
         ;       
         
-        return $this->fetchAll($sql, ["val" => $value . "*"], \PDO::FETCH_ASSOC);
-    }
+        $db = $this->getEntityManager()->getConnection();
 
-    
-    /** @return void */
-    
-    public function addFullTextIndex() : void
-    {
-        $sql = "ALTER TABLE `bigdick`.`book` DROP INDEX `idx`;ALTER TABLE `bigdick`.`book` ADD FULLTEXT `idx` (`title`, `original_title`)";
+        $query = $db->prepare($sql);
+        $query->execute(["val" => $value . "*"]);
 
-        $this->query($sql);
+        return $query->fetchAll();
     }
     
     /*

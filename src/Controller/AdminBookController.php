@@ -138,8 +138,7 @@ class AdminBookController extends AbstractController
                 } 
                 catch (FileException $e) {
                     // ... handle exception if something happens during file upload
-                    // return false;
-                    throw $e;
+                    return false;
                 }
 
                 // updates the 'brochureFilename' property to store the PDF file name
