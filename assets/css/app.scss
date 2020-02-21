@@ -123,6 +123,7 @@ Book Page Styles
         margin-bottom: 30px;
         img {
             width: 100%;
+            max-width: unset;
         }
     }
     .book-details {
