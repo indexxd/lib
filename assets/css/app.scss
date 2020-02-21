@@ -88,6 +88,10 @@ Book Page Styles
 .book-cover {
     grid-area: cover;
     margin-bottom: 30px;
+
+    img {
+        max-width: 600px;
+    }
 }
 
 .book-details {
